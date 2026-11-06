@@ -1,0 +1,17 @@
+{
+  "identifier": "crzbp/general-waybilling",
+  "version": "0.1.0",
+  "name": "General Waybilling",
+  "author": "crazybmanp",
+  "description": "Enables general waybill destinations for multi-track industries like Connelly Creek logs.",
+  "scope": "optional",
+  "license": "MIT",
+  "assemblies": [
+    "GeneralWaybilling.dll"
+  ],
+  "dependencies": {
+    "required": [
+      "rr/game >=0.6.0"
+    ]
+  }
+}
