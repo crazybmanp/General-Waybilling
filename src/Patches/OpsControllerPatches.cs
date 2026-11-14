@@ -1,11 +1,13 @@
 using System.Collections.Generic;
+using GeneralWaybilling.Zones;
 using HarmonyLib;
 using Model.Ops;
 
 namespace GeneralWaybilling.Patches
 {
     /// <summary>
-    /// Patches OpsController lifecycle and resolution methods to seamlessly integrate general waybill destinations.
+    /// Patches OpsController lifecycle and resolution methods to seamlessly integrate general waybill destinations
+    /// and player-created waybill zones.
     /// </summary>
     public static class OpsControllerPatches
     {
@@ -31,6 +33,12 @@ namespace GeneralWaybilling.Patches
                     return false;
                 }
 
+                if (WaybillZoneRegistry.TryGetPosition(opsCarPositionIdentifier, out OpsCarPosition zonePosition))
+                {
+                    __result = zonePosition;
+                    return false;
+                }
+
                 return true;
             }
         }
@@ -46,6 +54,13 @@ namespace GeneralWaybilling.Patches
                     if (GeneralWaybillRegistry.TryGetComponent(identifier, out GeneralIndustryLoader loader))
                     {
                         __result = loader;
+                        return;
+                    }
+
+                    if (WaybillZoneRegistry.TryGetComponent(identifier, out ZoneIndustryComponent zoneComponent))
+                    {
+                        __result = zoneComponent;
+                        return;
                     }
                 }
             }

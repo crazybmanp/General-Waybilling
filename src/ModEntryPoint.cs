@@ -1,5 +1,7 @@
 using System;
 using System.Reflection;
+using GeneralWaybilling.UI;
+using GeneralWaybilling.Zones;
 using HarmonyLib;
 using Model.Ops;
 using Railroader.Modding;
@@ -47,6 +49,16 @@ namespace GeneralWaybilling
                 Log.Error(ex, "Failed to apply Harmony patches.");
             }
 
+            try
+            {
+                CarInspectorOverrideSection.Register();
+                Log.Info("CarInspectorOverrideSection registered.");
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Failed to register CarInspectorOverrideSection.");
+            }
+
             // If world is already loaded, register destinations immediately
             if (OpsController.Shared != null)
             {
@@ -76,6 +88,9 @@ namespace GeneralWaybilling
         {
             try
             {
+                WaybillZoneRegistry.Initialize();
+                CarInspectorOverrideSection.Register();
+
                 OpsController? shared = OpsController.Shared;
                 if (shared != null)
                 {
@@ -93,6 +108,7 @@ namespace GeneralWaybilling
             try
             {
                 GeneralWaybillRegistry.UnregisterAll();
+                WaybillZoneRegistry.Cleanup();
             }
             catch (Exception ex)
             {
