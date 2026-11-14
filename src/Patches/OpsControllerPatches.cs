@@ -18,6 +18,17 @@ namespace GeneralWaybilling.Patches
             public static void Prefix(List<Area> areas)
             {
                 GeneralWaybillRegistry.RegisterForAreas(areas);
+                FuelingStandRegistry.RegisterForAreas(areas);
+            }
+        }
+
+        [HarmonyPatch(typeof(OpsController), nameof(OpsController.PostRestoreProperties))]
+        public static class PostRestorePropertiesPatch
+        {
+            [HarmonyPrefix]
+            public static void Prefix(OpsController __instance)
+            {
+                FuelingStandRegistry.RegisterForOpsController(__instance);
             }
         }
 
@@ -30,6 +41,12 @@ namespace GeneralWaybilling.Patches
                 if (GeneralWaybillRegistry.TryGetPosition(opsCarPositionIdentifier, out OpsCarPosition position))
                 {
                     __result = position;
+                    return false;
+                }
+
+                if (FuelingStandRegistry.TryGetPosition(opsCarPositionIdentifier, out OpsCarPosition fuelingPosition))
+                {
+                    __result = fuelingPosition;
                     return false;
                 }
 
@@ -54,6 +71,12 @@ namespace GeneralWaybilling.Patches
                     if (GeneralWaybillRegistry.TryGetComponent(identifier, out GeneralIndustryLoader loader))
                     {
                         __result = loader;
+                        return;
+                    }
+
+                    if (FuelingStandRegistry.TryGetComponent(identifier, out FuelingStandLoader fuelingLoader))
+                    {
+                        __result = fuelingLoader;
                         return;
                     }
 

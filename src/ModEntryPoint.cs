@@ -95,6 +95,7 @@ namespace GeneralWaybilling
                 if (shared != null)
                 {
                     GeneralWaybillRegistry.RegisterForOpsController(shared);
+                    FuelingStandRegistry.RegisterForOpsController(shared);
                 }
             }
             catch (Exception ex)
@@ -108,6 +109,7 @@ namespace GeneralWaybilling
             try
             {
                 GeneralWaybillRegistry.UnregisterAll();
+                FuelingStandRegistry.UnregisterAll();
                 WaybillZoneRegistry.Cleanup();
             }
             catch (Exception ex)

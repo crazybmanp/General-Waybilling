@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using Model.Ops;
 using Model.Ops.Definition;
 
@@ -15,9 +14,6 @@ namespace GeneralWaybilling
     {
         private static readonly Dictionary<string, GeneralIndustryLoader> componentsByIdentifier =
             new Dictionary<string, GeneralIndustryLoader>(StringComparer.Ordinal);
-
-        private static readonly FieldInfo? industryComponentLookupField =
-            typeof(OpsController).GetField("_industryComponentLookup", BindingFlags.Instance | BindingFlags.NonPublic);
 
         /// <summary>
         /// Registers general destinations for all eligible multi-landing industries across the given areas.
@@ -106,19 +102,7 @@ namespace GeneralWaybilling
                 }
             }
 
-            if (industryComponentLookupField != null)
-            {
-                Dictionary<string, IndustryComponent>? lookup =
-                    industryComponentLookupField.GetValue(opsController) as Dictionary<string, IndustryComponent>;
-
-                if (lookup != null)
-                {
-                    foreach (KeyValuePair<string, GeneralIndustryLoader> pair in componentsByIdentifier)
-                    {
-                        lookup[pair.Key] = pair.Value;
-                    }
-                }
-            }
+            OpsControllerSync.SyncComponents(opsController, componentsByIdentifier.Values, includeAllIndustryComponents: false);
         }
 
         /// <summary>
