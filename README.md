@@ -27,6 +27,11 @@ When waybilling cars (e.g. via automatic waybills under **When Empty**):
   * Specific landing destinations (`L1`, `L2`, etc.) remain fully available for players who still want precise track assignments.
   * Works seamlessly with Auto-Destination menus, "Copy to Coupled", and "Cycle Waybills".
   * Highlights all member landing tracks when clicking the destination location in the Car Inspector.
+* **Destination Overrides & Custom Waybill Zones:**
+  * Override a car's active waybill destination directly from the Car Inspector.
+  * Create, view, focus, and delete player-drawn track zones using the **Waybill Zones Manager** to route cars to custom yard or siding destinations.
+* **Fueling Stand Transfer Loading:**
+  * Waybill empty freight cars to repair/service station fueling stands (such as coal towers and diesel fuel stands) to load fuel from station storage for transfer.
 
 ---
 
