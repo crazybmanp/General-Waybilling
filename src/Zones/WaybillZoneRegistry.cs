@@ -129,6 +129,7 @@ namespace GeneralWaybilling.Zones
                         existing.DisplayName = deserialized.DisplayName;
                         if (existing.RuntimeSpans.Count == 0 || !existing.SerializedSpans.SequenceEqual(deserialized.SerializedSpans))
                         {
+                            DetachFromArea(existing);
                             RecreateRuntimeSpans(existing, deserialized.SerializedSpans);
                         }
                         seenIds.Add(existing.Id);

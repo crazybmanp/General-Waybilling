@@ -71,6 +71,7 @@ namespace GeneralWaybilling.Zones
                         IsProgressionEnabled = false,
                         IsTrackReachable = true
                     };
+                    cachedIndustry.Initialize();
                     Component.Industry = cachedIndustry;
                     cachedIndustry.Components.Add(Component);
                 }
@@ -114,6 +115,7 @@ namespace GeneralWaybilling.Zones
         public void InvalidateCache()
         {
             cachedComponent = null;
+            cachedIndustry?.Dispose();
             cachedIndustry = null;
         }
 

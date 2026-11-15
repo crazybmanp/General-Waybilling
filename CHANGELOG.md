@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.2.1
+- Fixed a `NullReferenceException` in `Industry.get_Contract()` during overnight day rollover when at least one Waybill Zone is assigned to an Area.
+
 ## 0.2.0
 - Added destination overrides in the Car Inspector, allowing players to override a car's active waybill destination.
 - Added custom player-drawn Waybill Zones with the **Waybill Zones Manager** window to create, view, focus, and delete track zones as waybill destinations.
