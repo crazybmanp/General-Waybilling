@@ -138,11 +138,6 @@ namespace GeneralWaybilling.UI
                             DestinationOverrideManager.SetOverride(car, null);
                             section.Rebuild();
                         }).Tooltip("Clear Override", "Clear this override immediately and revert to the original route.");
-
-                        actionStrip.AddButtonCompact("Manage Zones...", delegate
-                        {
-                            ZoneManagerWindow.Open();
-                        }).Tooltip("Waybill Zones", "Open the Waybill Zones Manager to create or edit custom destination zones.");
                     }));
                 }
                 else
@@ -156,13 +151,17 @@ namespace GeneralWaybilling.UI
                             Toast.Present($"Copied routing override to {copied} coupled car(s).");
                             section.Rebuild();
                         }).Tooltip("Copy to Coupled", "Copy destination override from coupled cars.");
-
-                        actionStrip.AddButtonCompact("Manage Zones...", delegate
-                        {
-                            ZoneManagerWindow.Open();
-                        }).Tooltip("Waybill Zones", "Open the Waybill Zones Manager to create or edit custom destination zones.");
                     }));
                 }
+
+                // Custom zones management row
+                section.AddField("Zones", section.ButtonStrip(delegate(UIPanelBuilder zoneStrip)
+                {
+                    zoneStrip.AddButtonCompact("Manage Zones...", delegate
+                    {
+                        ZoneManagerWindow.Open();
+                    }).Tooltip("Waybill Zones", "Open the Waybill Zones Manager to create or edit custom destination zones.");
+                }));
             });
         }
 
