@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.2
+- Updated compatibility for Railroader 0.6.3.
+- Fixed destination overrides and Waybill Zone track picking for 0.6.3 API changes.
+
 ## 0.2.1
 - Fixed a `NullReferenceException` in `Industry.get_Contract()` during overnight day rollover when at least one Waybill Zone is assigned to an Area.
 

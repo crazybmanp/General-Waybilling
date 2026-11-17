@@ -25,7 +25,7 @@ namespace GeneralWaybilling.Zones
 
             if (Input.GetMouseButtonDown(0))
             {
-                Location? hover = picker.CurrentHoverLocation;
+                Location? hover = ZoneCreationTool.CurrentHoverLocation;
                 if (hover.HasValue && hover.Value.IsValid)
                 {
                     ZoneCreationTool.RecordDragStart(hover.Value, Input.mousePosition);

@@ -52,7 +52,7 @@ namespace GeneralWaybilling.Patches
                         string baseDestName = opsController.NameForPosition(rawPos);
                         destinationName = prefix + baseDestName;
                         destination = new OpsCarPosition(prefix + rawPos.DisplayName, rawPos.Identifier, rawPos.Spans);
-                        destinationPosition = opsController.PointForPosition(rawPos);
+                        destinationPosition = rawPos.GetCenter();
                         isAtDestination = opsController.CarsAtPosition(rawPos).Contains(car);
                         __result = true;
                         return false;
@@ -141,26 +141,33 @@ namespace GeneralWaybilling.Patches
                             (int)center.x / 10,
                             destination.Spans);
 
-                        OpsCarPosition? currentPos = shared.PositionForCar(car);
                         OpsCarList.Entry.Location currentLoc;
-                        if (!currentPos.HasValue)
+                        if (car.IsInBardo)
                         {
-                            Area? closest = shared.ClosestArea(car);
-                            currentLoc = (closest == null)
-                                ? new OpsCarList.Entry.Location("???", null, Vector3.zero, 0, Array.Empty<string>())
-                                : new OpsCarList.Entry.Location(closest.name, null, Vector3.zero, 0, Array.Empty<string>());
+                            currentLoc = new OpsCarList.Entry.Location("Off railroad", null, Vector3.zero, 0, Array.Empty<string>());
                         }
                         else
                         {
-                            OpsCarPosition val = currentPos.Value;
-                            Area? curArea = shared.AreaForCarPosition(val);
-                            Vector3 curCenter = val.GetCenter();
-                            currentLoc = new OpsCarList.Entry.Location(
-                                val.DisplayName,
-                                curArea?.name ?? "???",
-                                curCenter,
-                                (int)curCenter.x / 10,
-                                val.Spans);
+                            OpsCarPosition? currentPos = shared.PositionForCar(car);
+                            if (!currentPos.HasValue)
+                            {
+                                Area? closest = shared.ClosestArea(car);
+                                currentLoc = (closest == null)
+                                    ? new OpsCarList.Entry.Location("???", null, Vector3.zero, 0, Array.Empty<string>())
+                                    : new OpsCarList.Entry.Location(closest.name, null, Vector3.zero, 0, Array.Empty<string>());
+                            }
+                            else
+                            {
+                                OpsCarPosition val = currentPos.Value;
+                                Area? curArea = shared.AreaForCarPosition(val);
+                                Vector3 curCenter = val.GetCenter();
+                                currentLoc = new OpsCarList.Entry.Location(
+                                    val.DisplayName,
+                                    curArea?.name ?? "???",
+                                    curCenter,
+                                    (int)curCenter.x / 10,
+                                    val.Spans);
+                            }
                         }
 
                         bool isSpotted = DestinationOverrideManager.IsCarSpottedAtOverride(car, destination);

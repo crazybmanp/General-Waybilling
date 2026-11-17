@@ -31,6 +31,7 @@ namespace GeneralWaybilling.Zones
         private static bool isCompleting;
 
         private static Location? dragStartLocation;
+        private static Location? currentHoverLocation;
         private static Vector3 dragStartMousePos;
 
         /// <summary>
@@ -80,12 +81,22 @@ namespace GeneralWaybilling.Zones
         }
 
         /// <summary>
+        /// Gets the latest hovered track location reported by TrackLocationPicker.
+        /// </summary>
+        public static Location? CurrentHoverLocation => currentHoverLocation;
+
+        /// <summary>
         /// Records mouse-down position on track to measure drag gesture displacement.
         /// </summary>
         public static void RecordDragStart(Location loc, Vector3 mousePos)
         {
             dragStartLocation = loc;
             dragStartMousePos = mousePos;
+        }
+
+        private static void HandleHoverLocationChanged(Location? loc)
+        {
+            currentHoverLocation = loc;
         }
 
         private static void ArmPicker()
@@ -97,12 +108,14 @@ namespace GeneralWaybilling.Zones
                 return;
             }
 
+            currentHoverLocation = null;
             string trackCountText = selectedSpans.Count == 1 ? "1 track" : $"{selectedSpans.Count} tracks";
             string prompt = $"[Drag/Click] Add  ·  [Ctrl+Drag/Click] Remove  ·  [Shift+Click] Spur (Buffer)  ·  [Space] Done ({trackCountText})  ·  [Esc] Cancel";
 
             TrackLocationPickRequest request = new TrackLocationPickRequest
             {
                 Prompt = prompt,
+                OnHoverLocationChanged = HandleHoverLocationChanged,
                 OnLocationSelected = HandleLocationSelected,
                 OnCycleRequested = CompleteSession,
                 OnCancelled = CancelSession
@@ -496,6 +509,7 @@ namespace GeneralWaybilling.Zones
             activeRequest = null;
             isCompleting = false;
             dragStartLocation = null;
+            currentHoverLocation = null;
         }
     }
 }

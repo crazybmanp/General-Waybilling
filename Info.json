@@ -1,6 +1,6 @@
 {
   "identifier": "crzbp/general-waybilling",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "name": "General Waybilling",
   "author": "crazybmanp",
   "description": "Enables general waybill destinations for multi-track industries like Connelly Creek logs.",
@@ -11,7 +11,7 @@
   ],
   "dependencies": {
     "required": [
-      "rr/game >=0.6.0"
+      "rr/game >=0.6.3"
     ]
   }
 }
