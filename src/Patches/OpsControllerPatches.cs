@@ -28,6 +28,7 @@ namespace GeneralWaybilling.Patches
             [HarmonyPrefix]
             public static void Prefix(OpsController __instance)
             {
+                GeneralWaybillRegistry.RegisterForOpsController(__instance);
                 FuelingStandRegistry.RegisterForOpsController(__instance);
             }
         }
@@ -68,9 +69,9 @@ namespace GeneralWaybilling.Patches
             {
                 if (__result == null && identifier != null)
                 {
-                    if (GeneralWaybillRegistry.TryGetComponent(identifier, out GeneralIndustryLoader loader))
+                    if (GeneralWaybillRegistry.TryGetComponent(identifier, out GeneralIndustryComponent component))
                     {
-                        __result = loader;
+                        __result = component;
                         return;
                     }
 
