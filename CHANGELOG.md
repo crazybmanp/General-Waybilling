@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.0
+- Added **Area-level** general waybill destinations whenever multiple industries in an area share a captive loading or unloading cargo (e.g., `Sylva - Pulpwood` covering both Sylva Paperboard and Parson's Tannery, and `Alarka - Copper Ore` covering Alarka Copper Co. M1 and M2).
+- Added support for general **unloading** destinations for industries with multiple captive unloading spurs for the same cargo.
+
 ## 0.2.2
 - Updated compatibility for Railroader 0.6.3.
 - Fixed destination overrides and Waybill Zone track picking for 0.6.3 API changes.
